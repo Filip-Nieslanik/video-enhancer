@@ -1,0 +1,6 @@
+# Video Enhancer - desktop app dependencies
+imageio-ffmpeg>=0.5      # bundled ffmpeg binary
+tkinterdnd2>=0.4         # drag & drop into the window
+
+# AI upscaling uses realesrgan-ncnn-vulkan.exe (in realesrgan-ncnn/),
+# which needs no Python packages. tkinter ships with Python on Windows.

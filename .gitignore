@@ -1,0 +1,46 @@
+# Real-ESRGAN binaries and models (fetched via scripts/download_models.py)
+realesrgan-ncnn/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+*.spec.bak
+
+# Test + tooling caches
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Packaging output
+*.exe
+*.dmg
+*.app/
+installer-output/
+
+# Editor / OS / tooling cruft
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Scratch: sample clips and renders dropped in the repo while testing
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+*.trf
+!assets/*.png

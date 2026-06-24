@@ -1,0 +1,29 @@
+# Windows version resource embedded into the exe. A proper version block
+# makes the binary look like a real product to SmartScreen and AV heuristics
+# (it does not replace code signing, but it helps).
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 0, 0, 0),
+    prodvers=(1, 0, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0),
+  ),
+  kids=[
+    StringFileInfo([
+      StringTable("040904B0", [
+        StringStruct("CompanyName", "Filip Nieslanik"),
+        StringStruct("FileDescription", "Video Enhancer"),
+        StringStruct("FileVersion", "1.0.0.0"),
+        StringStruct("InternalName", "VideoEnhancer"),
+        StringStruct("OriginalFilename", "VideoEnhancer.exe"),
+        StringStruct("ProductName", "Video Enhancer"),
+        StringStruct("ProductVersion", "1.0.0.0"),
+      ]),
+    ]),
+    VarFileInfo([VarStruct("Translation", [0x0409, 1200])]),
+  ],
+)
