@@ -29,8 +29,7 @@ env/
 *.app/
 installer-output/
 
-# Editor / OS / tooling cruft
-.claude/
+# Editor / OS cruft
 .vscode/
 .idea/
 .DS_Store

@@ -43,6 +43,26 @@ def _squircle_mask(size: int, n: float = 5.0) -> Image.Image:
     return Image.fromarray((inside * 255).astype(np.uint8), "L")
 
 
+def _round_corners(points, radius: float, steps: int = 16):
+    """Return a dense point list tracing the polygon with every corner
+    replaced by a smooth arc, so a filled polygon gets clean rounded
+    corners without any stroke tricks."""
+    pts = []
+    n = len(points)
+    for i in range(n):
+        prev = np.array(points[(i - 1) % n], float)
+        cur = np.array(points[i], float)
+        nxt = np.array(points[(i + 1) % n], float)
+        v1, v2 = prev - cur, nxt - cur
+        l1, l2 = np.linalg.norm(v1), np.linalg.norm(v2)
+        r = min(radius, l1 / 2, l2 / 2)
+        p1, p2 = cur + v1 / l1 * r, cur + v2 / l2 * r
+        for t in np.linspace(0, 1, steps):
+            b = (1 - t) ** 2 * p1 + 2 * (1 - t) * t * cur + t ** 2 * p2
+            pts.append((float(b[0]), float(b[1])))
+    return pts
+
+
 def _sheen(size: int, mask: Image.Image) -> Image.Image:
     """A faint top-down highlight clipped to the badge, for depth."""
     ys = np.linspace(0, 1, size)[:, None]
@@ -66,11 +86,10 @@ def badge(size: int = 1024) -> Image.Image:
     def px(fx, fy):
         return (fx * size, fy * size)
 
-    # bold play triangle, the hero of the mark, filling the upper area
-    tri = [px(0.29, 0.24), px(0.29, 0.66), px(0.63, 0.45)]
-    d.polygon(tri, fill=WHITE)
-    # a thick rounded stroke softens the three points
-    d.line(tri + [tri[0]], fill=WHITE, width=int(size * 0.06), joint="curve")
+    # bold play triangle, the hero of the mark, filling the upper area.
+    # Corners are rounded in the fill itself for a clean, even softness.
+    tri = [px(0.30, 0.25), px(0.30, 0.65), px(0.64, 0.45)]
+    d.polygon(_round_corners(tri, size * 0.052), fill=WHITE)
 
     # ascending bars, kept fully clear of the triangle above them
     bar_w = size * 0.055
